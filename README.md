@@ -24,3 +24,13 @@ git clone https://github.com/coden607/skills.git
 - `chatgpt-bundle/` — self-contained .md bundle + install guide for ChatGPT (Custom GPTs / Projects)
 
 Skill format: SKILL.md frontmatter (name + description) + optional references/. Compatible with any agent that scans SKILL.md skills dirs.
+
+## Full installed set (2026-10-05)
+
+The repo root now also contains the Cole Medin skill set from [coleam00/skills](https://github.com/coleam00/skills) (MIT) plus `adaptive-persona` and `jev-gate`. Each `SKILL.md` has a Grok runtime block so the procedure runs without Claude Code slash commands.
+
+Install every skill folder that has a `SKILL.md`:
+
+```bash
+./scripts/install-skills-everywhere.sh -A -s . -t ~/.openclaw/skills
+```
