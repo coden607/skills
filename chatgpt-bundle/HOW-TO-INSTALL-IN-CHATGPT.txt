@@ -1,0 +1,24 @@
+HOW TO USE THIS BUNDLE IN CHATGPT
+=================================
+
+Path A — Custom GPT (GPTs you create):
+1. Create/edit a GPT → "Configure" tab.
+2. Paste the section(s) you want into the GPT's "Instructions" field
+   (each skill starts at "## SKILL: <name>" — copy whole sections).
+3. OR upload cole-medin-skills-bundle.md under "Knowledge" and add to
+   Instructions: "Before answering, check the Knowledge bundle; if a
+   SKILL section's trigger matches, follow its procedure exactly."
+
+Path B — ChatGPT Projects (Plus/Pro):
+1. New Project → upload cole-medin-skills-bundle.md as a Project file.
+2. First message: "Read the skills bundle in this project. Whenever my
+   request matches a skill's WHEN-TO-USE description, apply that skill's
+   procedure for your answer."
+
+Path C — Codex CLI (OpenAI's coding agent, native skill support):
+   Just run:  ./install-skills-everywhere.sh
+   It already targets ~/.codex/skills — no bundle needed.
+
+NOTE: ChatGPT cannot auto-load skills from disk; the bundle must be
+attached per-GPT / per-Project. This is a vendor limitation, not a gap
+in the skills.
