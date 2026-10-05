@@ -97,11 +97,11 @@ EOF
 }
 
 make_wrapper claude "$REAL_claude" "--dangerously-skip-permissions"
-make_wrapper codex  "$REAL_codex"  "--yolo"
+make_wrapper codex  "$REAL_codex"  "--dangerously-bypass-approvals-and-sandbox"
 make_wrapper gem    "$REAL_gemini" "--yolo"
 make_wrapper gemini "$REAL_gemini" "--yolo"
-make_wrapper kimi   "$REAL_kimi"   "--auto --dangerously-skip-permissions"
-make_wrapper grok   "$REAL_grok"   "--yolo"
+make_wrapper kimi   "$REAL_kimi"   "--yolo"
+# grok: community chat CLI, no agent mode — wrapper runs normally (see generated file)
 
 # PATH hook
 for rc in "$HOME/.bashrc" "$HOME/.profile"; do
