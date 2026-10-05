@@ -19,7 +19,7 @@ AUTO=0
 TARGETS=()
 
 # The Cole Medin skill set (by folder name). Install only these unless -A given.
-DEFAULT_SET=(route-with-jev maintain-second-brain isolate-agent-runs run-software-factory enforce-with-hooks route-interrupts)
+DEFAULT_SET=(route-with-jev maintain-second-brain isolate-agent-runs run-software-factory enforce-with-hooks route-interrupts compress-token-spend)
 INSTALL_ALL=0
 
 while [[ $# -gt 0 ]]; do
