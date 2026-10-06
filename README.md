@@ -18,6 +18,12 @@ git clone https://github.com/coden607/skills.git
 ./skills/scripts/install-skills-everywhere.sh -s skills -t ~/.claude/skills   # or ~/.codex/skills, etc.
 ```
 
+## iSH (iPhone) — one paste
+```sh
+curl -fsSL https://raw.githubusercontent.com/coden607/skills/main/scripts/ocs-for-ish.sh | sh
+```
+Installs git+bash via apk if needed, clones/updates this repo into `~/skills`, and installs the core 7 skills into `~/.claude/skills` + `~/.codex/skills` + `~/.config/claude/skills`. Re-paste anytime to update. `ALL=1` prefix installs all 44 skills, `LINK=1` symlinks instead of copying.
+
 ## Also included
 - `scripts/install-ai-clis.sh` — one-click install of claude/codex/gem/kimi/grok CLIs with `yolo` launchers
 - `scripts/one-shot-setup.sh` — the FULL bootstrap: paste one curl line → CLIs + launchers + skills + API-key prompts
