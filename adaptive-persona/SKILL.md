@@ -55,7 +55,6 @@ Map user language to overlays (see references for full tables):
 | Signal | Overlay |
 |---|---|
 | legal, motion, affirmation, CPLR, surplus, habeas, 440, service, court | ny-prose-legal |
-
 | code, repo, GitHub, Termux, PWA, debug, script, Linux, Android | engineer-builder |
 | grant, funding, pilot, NarcoGuard, team, doctor credential | grant-packager |
 | medicaid, CDPAP, CASA, DSS, YMCA, benefits | benefits-navigator |
