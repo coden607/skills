@@ -5,11 +5,15 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL="$ROOT/legal-war-room/SKILL.md"
 README="$ROOT/README.md"
 INSTALLER="$ROOT/scripts/install-skills-everywhere.sh"
+ADAPTIVE="$ROOT/adaptive-persona/SKILL.md"
 
 fail(){ printf 'FAIL: %s\n' "$*" >&2; exit 1; }
 pass(){ printf 'PASS: %s\n' "$*"; }
 
 [[ -f "$SKILL" ]] || fail "legal-war-room/SKILL.md is missing"
+[[ -f "$ROOT/legal-war-room/references/authority-procedure.md" ]] || fail "authority-procedure reference missing"
+[[ -f "$ROOT/legal-war-room/references/adversarial-review.md" ]] || fail "adversarial-review reference missing"
+[[ -f "$ROOT/legal-war-room/templates/legal-work-matrix.md" ]] || fail "legal-work-matrix template missing"
 
 name="$(awk 'BEGIN{n=0} /^---$/{n++;next} n==1 && /^name:/{sub(/^name:[[:space:]]*/,""); print; exit}' "$SKILL")"
 [[ "$name" == "legal-war-room" ]] || fail "frontmatter name must equal directory name"
@@ -38,8 +42,16 @@ for required in \
   grep -Fqi "$required" "$SKILL" || fail "missing required concept: $required"
 done
 
-grep -Fq '`legal-war-room`' "$README" || fail "README skills report does not list legal-war-room"
-! grep -Fq '\\\\n' "$README" || fail "README contains literal \\\\n escape text"
-grep -Eq 'DEFAULT_SET=.*legal-war-room|DEFAULT_SET=\([^)]*legal-war-room' "$INSTALLER" || fail "default installer does not include legal-war-room"
+for pointer in \
+  'references/authority-procedure.md' \
+  'references/adversarial-review.md' \
+  'templates/legal-work-matrix.md'; do
+  grep -Fq "$pointer" "$SKILL" || fail "SKILL.md does not wire resource: $pointer"
+done
 
-pass "legal-war-room structure, discovery triggers, quality gates, report entry, and default installation"
+grep -Fq '`legal-war-room`' "$README" || fail "README skills report does not list legal-war-room"
+if grep -Fq '\n' "$README"; then fail "README contains literal \\n escape text"; fi
+grep -Eq 'DEFAULT_SET=.*legal-war-room|DEFAULT_SET=\([^)]*legal-war-room' "$INSTALLER" || fail "default installer does not include legal-war-room"
+grep -Fq 'load `legal-war-room` when available' "$ADAPTIVE" || fail "adaptive-persona does not auto-pair legal-war-room"
+
+pass "legal-war-room structure, discovery, resources, quality gates, report, installer, and auto-pair contract"
