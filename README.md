@@ -1,5 +1,5 @@
 # skills
-Seven agent skills distilled from Cole Medin's agentic-coding videos (21-video sweep, 2026-10-05) — plus one-click installers to arm any CLI with them.
+Eight core agent skills, including the legal-war-room workflow, built alongside skills distilled from Cole Medin's agentic-coding videos (21-video sweep, 2026-10-05) — plus one-click installers to arm any CLI with them.
 
 ## The skills
 | Skill | What it does |
