@@ -10,7 +10,8 @@ Seven agent skills distilled from Cole Medin's agentic-coding videos (21-video s
 | `run-software-factory` | Autonomy levels + PRD→PR pipeline + 30-min triage cron loops |
 | `enforce-with-hooks` | Hook-event design; regex→Jev→LLM judge ladder; 4 recipes |
 | `route-interrupts` | Mid-task interruptions add to or queue behind the active work — never silently kill it |
-| `compress-token-spend` | Cut token/$ spend: tier routing, cache-aware prompts, output discipline, 10% judge sampling |\n| `legal-war-room` | On-demand litigation-grade legal research, procedural/remedy selection, adversarial judge/opponent/appellate review, service/citation verification, and filing quality gates |
+| `compress-token-spend` | Cut token/$ spend: tier routing, cache-aware prompts, output discipline, 10% judge sampling |
+| `legal-war-room` | On-demand litigation-grade legal research, procedural/remedy selection, adversarial judge/opponent/appellate review, service/citation verification, and filing quality gates |
 
 ## Install (any SKILL.md-format CLI: OpenClaw, Claude Code, Codex...)
 ```bash
