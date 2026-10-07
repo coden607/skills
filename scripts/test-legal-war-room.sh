@@ -38,7 +38,8 @@ for required in \
   grep -Fqi "$required" "$SKILL" || fail "missing required concept: $required"
 done
 
-grep -Fq '`legal-war-room`' "$README" || fail "README skills report does not list legal-war-room"\n! grep -Fq '\\\\n' "$README" || fail "README contains literal \\\\n escape text"
+grep -Fq '`legal-war-room`' "$README" || fail "README skills report does not list legal-war-room"
+! grep -Fq '\\\\n' "$README" || fail "README contains literal \\\\n escape text"
 grep -Eq 'DEFAULT_SET=.*legal-war-room|DEFAULT_SET=\([^)]*legal-war-room' "$INSTALLER" || fail "default installer does not include legal-war-room"
 
 pass "legal-war-room structure, discovery triggers, quality gates, report entry, and default installation"
