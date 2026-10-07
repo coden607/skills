@@ -1,0 +1,22 @@
+name: skills-ci
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  sanity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Shell syntax
+        run: |
+          bash -n scripts/*.sh
+      - name: Legal war room contract
+        run: bash scripts/test-legal-war-room.sh
+      - name: Installer e2e smoke
+        run: |
+          tmp="$(mktemp -d)"
+          HOME="$tmp/home" bash scripts/install-skills-everywhere.sh -A -s "$PWD" -t "$tmp/skills"
+          test -f "$tmp/skills/legal-war-room/SKILL.md"

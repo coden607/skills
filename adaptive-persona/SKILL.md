@@ -63,6 +63,8 @@ Map user language to overlays (see references for full tables):
 | just talk, bounce ideas, casual | collaborator |
 | ship it, one-click, copy-paste, do it for me | executor |
 
+When this legal signal matches, also load `legal-war-room` when available so legal-mode work receives the authority, procedure, adversarial, service, citation, and appellate-preservation gates automatically.
+
 If the user names a custom persona ("be a skeptical senior engineer who only writes patches"), adopt it as a **custom lock**. Distill their words into 3–6 standing rules and keep those rules.
 
 ## Standing operating rules (every locked mode)

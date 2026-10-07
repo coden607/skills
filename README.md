@@ -1,5 +1,5 @@
 # skills
-Seven agent skills distilled from Cole Medin's agentic-coding videos (21-video sweep, 2026-10-05) — plus one-click installers to arm any CLI with them.
+Eight core agent skills, including the legal-war-room workflow, built alongside skills distilled from Cole Medin's agentic-coding videos (21-video sweep, 2026-10-05) — plus one-click installers to arm any CLI with them.
 
 ## The skills
 | Skill | What it does |
@@ -11,6 +11,7 @@ Seven agent skills distilled from Cole Medin's agentic-coding videos (21-video s
 | `enforce-with-hooks` | Hook-event design; regex→Jev→LLM judge ladder; 4 recipes |
 | `route-interrupts` | Mid-task interruptions add to or queue behind the active work — never silently kill it |
 | `compress-token-spend` | Cut token/$ spend: tier routing, cache-aware prompts, output discipline, 10% judge sampling |
+| `legal-war-room` | On-demand litigation-grade legal research, procedural/remedy selection, adversarial judge/opponent/appellate review, service/citation verification, and filing quality gates |
 
 ## Install (any SKILL.md-format CLI: OpenClaw, Claude Code, Codex...)
 ```bash
@@ -22,7 +23,7 @@ git clone https://github.com/coden607/skills.git
 ```sh
 curl -fsSL https://raw.githubusercontent.com/coden607/skills/main/scripts/ocs-for-ish.sh | sh
 ```
-Installs git+bash via apk if needed, clones/updates this repo into `~/skills`, and installs the core 7 skills into `~/.claude/skills` + `~/.codex/skills` + `~/.config/claude/skills`. Re-paste anytime to update. `ALL=1` prefix installs all 44 skills, `LINK=1` symlinks instead of copying.
+Installs git+bash via apk if needed, clones/updates this repo into `~/skills`, and installs the core 8 skills into `~/.claude/skills` + `~/.codex/skills` + `~/.config/claude/skills`. Re-paste anytime to update. `ALL=1` prefix installs all 44 skills, `LINK=1` symlinks instead of copying.
 
 ## Also included
 - `scripts/install-ai-clis.sh` — one-click install of claude/codex/gem/kimi/grok CLIs with `yolo` launchers
