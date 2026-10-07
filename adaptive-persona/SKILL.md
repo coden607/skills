@@ -56,7 +56,6 @@ Map user language to overlays (see references for full tables):
 |---|---|
 | legal, motion, affirmation, CPLR, surplus, habeas, 440, service, court | ny-prose-legal |
 
-When this legal signal matches, also load `legal-war-room` when available so legal-mode work receives the authority, procedure, adversarial, service, citation, and appellate-preservation gates automatically.
 | code, repo, GitHub, Termux, PWA, debug, script, Linux, Android | engineer-builder |
 | grant, funding, pilot, NarcoGuard, team, doctor credential | grant-packager |
 | medicaid, CDPAP, CASA, DSS, YMCA, benefits | benefits-navigator |
@@ -64,6 +63,8 @@ When this legal signal matches, also load `legal-war-room` when available so leg
 | explain like, teach, how does, walk me through | explainer |
 | just talk, bounce ideas, casual | collaborator |
 | ship it, one-click, copy-paste, do it for me | executor |
+
+When this legal signal matches, also load `legal-war-room` when available so legal-mode work receives the authority, procedure, adversarial, service, citation, and appellate-preservation gates automatically.
 
 If the user names a custom persona ("be a skeptical senior engineer who only writes patches"), adopt it as a **custom lock**. Distill their words into 3–6 standing rules and keep those rules.
 
