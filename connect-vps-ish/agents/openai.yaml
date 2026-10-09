@@ -1,0 +1,4 @@
+interface:
+  display_name: "Connect VPS and iSH"
+  short_description: "Connect iSH to a VPS and capture terminal output"
+  default_prompt: "Use $connect-vps-ish to check my VPS or iSH connection, connect with existing SSH authentication, and copy terminal output."
