@@ -112,7 +112,8 @@ else ok "no Kimi installer failure logs"; fi
 # ---------- 6. Cloudclaw workspace ----------
 echo; echo "-- 6. Cloudclaw workspace"
 WS="$HOME/.openclaw/workspace"
-if [ -f "$WS/AGENTS.md" ] && grep -q "Conductor" "$WS/AGENTS.md"; then
+if [ "${DOCTOR_SKIP_WS:-0}" = 1 ]; then echo "(skipped — loaded by caller)"
+elif [ -f "$WS/AGENTS.md" ] && grep -q "Conductor" "$WS/AGENTS.md"; then
   ok "Cloudclaw files present; skills: $(find -L "$WS/skills" -maxdepth 2 -name SKILL.md 2>/dev/null | wc -l)"
   [ -f "$WS/BOOTSTRAP.md" ] && warn "BOOTSTRAP.md not done yet — tell the agent: Read AGENTS.md and run BOOTSTRAP.md."
 else
