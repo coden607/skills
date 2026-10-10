@@ -20,3 +20,36 @@ jobs:
           tmp="$(mktemp -d)"
           HOME="$tmp/home" bash scripts/install-skills-everywhere.sh -A -s "$PWD" -t "$tmp/skills"
           test -f "$tmp/skills/legal-war-room/SKILL.md"
+      - name: Claude compressed catalog e2e
+        run: |
+          tmp="$(mktemp -d)"
+          python3 -I scripts/compress-skills.py "$PWD" "$tmp/claude" | tee "$tmp/compress.log"
+          python3 - "$PWD" "$tmp/claude" <<'PY'
+          import runpy
+          import sys
+          from pathlib import Path
+
+          source = Path(sys.argv[1])
+          target = Path(sys.argv[2])
+          ns = runpy.run_path(str(source / "scripts" / "compress-skills.py"))
+
+          def body(path):
+              text = path.read_text(encoding="utf-8")
+              return ns["split_frontmatter"](text)[1]
+
+          def description(path):
+              text = path.read_text(encoding="utf-8")
+              front, _ = ns["split_frontmatter"](text)
+              return ns["extract_description"](front)[0]
+
+          src = {p.parent.name: p for p in source.glob("*/SKILL.md")}
+          dst = {p.parent.name: p for p in target.glob("*/SKILL.md")}
+          assert src.keys() == dst.keys(), (len(src), len(dst))
+          for name in src:
+              assert body(src[name]) == body(dst[name]), f"body changed: {name}"
+          before = sum(len(description(p)) for p in src.values())
+          after = sum(len(description(p)) for p in dst.values())
+          assert after < before, (before, after)
+          print(f"verified {len(src)} skills; bodies unchanged; descriptions {before}->{after}")
+          PY
+          test -f "$tmp/claude/jev-gate/scripts/decide.py"
