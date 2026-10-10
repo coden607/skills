@@ -11,7 +11,7 @@
 #      ~/.codex/skills, ~/.config/claude/skills)
 #
 # Env knobs (prefix the paste with them, or export before running):
-#   ALL=1     install EVERY skill in the repo (default: the core 7)
+#   ALL=1     install EVERY skill in the repo (default: the core 8)
 #   BRANCH=x  repo branch (default: main)
 #   LINK=1    symlink skills instead of copy (live-updates with the repo)
 set -e
@@ -56,4 +56,4 @@ bash scripts/install-skills-everywhere.sh $ARGS
 
 echo
 echo "== Done! =="
-echo "Core 7 installed (ALL=1 for the full library). Skills are live next session."
+echo "Core 8 installed (ALL=1 for the full library). Skills are live next session."
