@@ -16,14 +16,14 @@ Safety, tool, and legal rules from the system prompt always win. Persona never o
 
 ## Pair with jev-gate
 
-When the mode is ambiguous or the user says jev / gate / lock this, run the Jev bank before locking:
+When the mode is ambiguous or the user says jev / gate / lock this, resolve `JEV_GATE_DIR` to the directory containing the loaded `jev-gate/SKILL.md`, then run the Jev bank before locking:
 
 ```bash
-python3 /home/workdir/.grok/skills/jev-gate/scripts/decide.py \
+python3 $JEV_GATE_DIR/scripts/decide.py \
   --bank mode-router --state-file /tmp/jev-state.txt --floor 0.72
 ```
 
-If `policy.action` is `act`, lock persona + overlay from `answers` and write `state/current-mode.json`.
+If `policy.action` is `act`, lock persona + overlay from `answers` and write `${XDG_STATE_HOME:-$HOME/.local/state}/coden607/adaptive-persona/current-mode.json` (create its parent directory first).
 If `ask_human`, ask one question. Live TypeSafe is used only when a key is in the environment; otherwise the local scorer keeps the same JSON contract.
 
 ## When this skill is active
