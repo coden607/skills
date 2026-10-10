@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # one-shot-setup.sh — paste this into any fresh Ubuntu VPS and get:
-#   claude · codex · gem · kimi · grok  (+ `name yolo` launchers, + 6 skills, + API keys)
+#   claude · codex · gem · kimi · grok  (+ `name yolo` launchers, + permanent all-runtime skills, + API keys)
 #
 # PASTE-IT-ALL MODE (recommended):
 #   curl -fsSL https://raw.githubusercontent.com/coden607/skills/main/scripts/one-shot-setup.sh | bash
@@ -40,7 +40,7 @@ npm_i claude @anthropic-ai/claude-code
 npm_i codex  @openai/codex
 npm_i gemini @google/gemini-cli
 if have kimi; then ok "kimi present"; else pipx install kimi-cli >/dev/null 2>&1 && ok "kimi installed" || bad "kimi FAILED (needs Python 3.10+)"; fi
-if have grok; then ok "grok present"; else $SUDO npm install -g grok-cli >/dev/null 2>&1 && ok "grok installed (community build)" || bad "grok unavailable (no official xAI CLI)"; fi
+if have grok; then ok "grok present"; else $SUDO npm install -g @xai-official/grok >/dev/null 2>&1 && ok "grok installed (official xAI build)" || bad "grok install FAILED"; fi
 
 # ---------- 3. launchers (yolo flags verified against real --help) ----------
 head "Launchers (run from anywhere; yolo = full-auto)"
@@ -56,38 +56,17 @@ mk gem    "$R_gemini" 'exec "'"$R_gemini"'" --yolo "$@"'
 mk gemini "$R_gemini" 'exec "'"$R_gemini"'" --yolo "$@"'
 mk kimi   "$R_kimi"   'exec "'"$R_kimi"'" --yolo "$@"'
 if [[ -n "$R_grok" ]]; then
-  printf '#!/usr/bin/env bash\ncd "%s" || exit 1\n[[ "${1:-}" == "yolo" ]] && { shift; echo "[grok] no agent mode in community CLI — running normally"; }\nexec "%s" "$@"\n' "$MAIN_REPO" "$R_grok" > "$WRAPPER_DIR/grok"; chmod +x "$WRAPPER_DIR/grok"; ok "grok ready"
+  printf '#!/usr/bin/env bash\ncd "%s" || exit 1\nif [[ "${1:-}" == "yolo" ]]; then shift; exec "%s" --yolo "$@"; else exec "%s" "$@"; fi\n' "$MAIN_REPO" "$R_grok" "$R_grok" > "$WRAPPER_DIR/grok"; chmod +x "$WRAPPER_DIR/grok"; ok "grok ready"
 fi
 for rc in "$HOME/.bashrc" "$HOME/.profile"; do touch "$rc"; grep -q "$WRAPPER_DIR" "$rc" || echo "export PATH=\"$WRAPPER_DIR:\$PATH\"" >> "$rc"; done
 ok "PATH hooked"
 
-# ---------- 4. skills ----------
-head "Skills → Claude compressed + Codex canonical"
-if have git; then
-  TMP="$(mktemp -d)"
-  if git clone -q --depth 1 "$SKILLS_REPO" "$TMP/skills"; then
-    if have python3 && python3 -I "$TMP/skills/scripts/compress-skills.py" "$TMP/skills" "$HOME/.claude/skills"; then
-      ok "all skills → ~/.claude/skills (compressed descriptions)"
-    else
-      bad "Claude compressed skill install FAILED"
-    fi
-    mkdir -p "$HOME/.codex/skills"
-    N=0
-    for d in "$TMP/skills"/*/; do
-      n="$(basename "$d")"; [[ -f "$d/SKILL.md" ]] || continue
-      rm -rf "$HOME/.codex/skills/$n.tmp"
-      cp -R "$d" "$HOME/.codex/skills/$n.tmp" &&
-        mv "$HOME/.codex/skills/$n.tmp" "$HOME/.codex/skills/$n" &&
-        N=$((N+1))
-    done
-    ok "$N skills → ~/.codex/skills (canonical descriptions)"
-    rm -rf "$TMP"
-  else
-    rm -rf "$TMP"
-    bad "skills clone failed"
-  fi
+# ---------- 4. permanent all-runtime skills ----------
+head "Permanent Coden607 skills wiring"
+if curl -fsSL https://raw.githubusercontent.com/coden607/skills/main/scripts/install-all-ai-skills.sh | bash; then
+  ok "skills wired across Claude, Codex, Grok, Gemini, Kimi; ChatGPT bundle generated"
 else
-  bad "git missing — skills skipped (apt install git, re-run)"
+  bad "permanent skills wiring FAILED"
 fi
 
 # ---------- 5. API keys ----------
