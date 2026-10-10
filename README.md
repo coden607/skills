@@ -37,8 +37,11 @@ Installs git+bash via apk if needed, clones/updates this repo into `~/skills`, a
 
 ## Also included
 - `scripts/install-ai-clis.sh` — one-click install of claude/codex/gem/kimi/grok CLIs with `yolo` launchers
-- `scripts/one-shot-setup.sh` — the FULL bootstrap: paste one curl line → CLIs + launchers + skills + API-key prompts
-- `chatgpt-bundle/` — self-contained .md bundle + install guide for ChatGPT (Custom GPTs / Projects)
+- `scripts/one-shot-setup.sh` — the FULL bootstrap: paste one curl line → CLIs + launchers + permanent cross-runtime skills + API-key prompts
+- `scripts/install-all-ai-skills.sh` — canonical permanent wiring for Claude, Codex, Grok, Gemini and Kimi, plus a generated ChatGPT bundle
+- `scripts/build-runtime-bundles.py` — builds a complete offline ChatGPT Project/GPT Knowledge bundle from the live skill tree
+- `bundle.md` — tiny runtime router that forces lazy selection from the canonical library
+- `chatgpt-bundle/` — ChatGPT Project/GPT instructions and install guide
 
 Skill format: SKILL.md frontmatter (name + description) + optional references/. Compatible with any agent that scans SKILL.md skills dirs.
 
@@ -51,3 +54,35 @@ Install every skill folder that has a `SKILL.md`:
 ```bash
 ./scripts/install-skills-everywhere.sh -A -s . -t ~/.openclaw/skills
 ```
+
+
+## Permanent cross-runtime install
+
+Run this from a checkout of the repository:
+
+```bash
+bash scripts/install-all-ai-skills.sh
+```
+
+It maintains a canonical checkout at `~/.coden607/skills`, installs Claude's
+compressed catalog, installs canonical native skills into Codex and Grok Build,
+and writes managed instruction blocks for Gemini and Kimi without replacing
+unrelated instructions. It also creates `~/bin/skills-sync` and a once-per-day
+login refresh.
+
+Grok Build is a first-class target: native skills go to `~/.grok/skills` and
+global routing guidance goes to `~/.grok/AGENTS.md`.
+
+## ChatGPT adapter
+
+ChatGPT does not read a VPS skill directory directly. Use `bundle.md` as the
+live router when GitHub access is available. For an offline Project/GPT
+Knowledge file, generate one from the canonical tree:
+
+```bash
+python3 scripts/build-runtime-bundles.py --output-dir /tmp/coden607-chatgpt
+```
+
+Then add `coden607-skills-bundle.md` and `bundle.md` to the ChatGPT Project
+or GPT Knowledge, and use `chatgpt-bundle/PROJECT-INSTRUCTIONS.md` as the
+project/GPT instructions.
