@@ -27,7 +27,7 @@ def description(text: str) -> str:
             continue
         value = match.group(1).strip()
         if value and not re.fullmatch(r"[>|][+-]?", value):
-            return value.strip("'\\"")
+            return value.strip("'").strip('"')
         parts: list[str] = []
         for nxt in lines[i + 1:]:
             if re.match(r"^[A-Za-z0-9_-]+:\s*", nxt):
@@ -42,7 +42,7 @@ def description(text: str) -> str:
 
 def skill_name(text: str, fallback: str) -> str:
     match = re.search(r"^name:\s*(.+?)\s*$", frontmatter(text), re.M)
-    return match.group(1).strip().strip("'\\"") if match else fallback
+    return match.group(1).strip().strip("'").strip('"') if match else fallback
 
 
 def text_files(skill_dir: Path) -> list[Path]:
