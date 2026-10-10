@@ -50,7 +50,7 @@ python3 /home/workdir/.grok/skills/jev-gate/scripts/decide.py \
 Or pipe JSON:
 
 ```bash
-python3 /home/workdir/.grok/skills/jev-gate/scripts/decide.py --file /tmp/jev-req.json
+python3 "$JEV_GATE_DIR/scripts/decide.py" --file /tmp/jev-req.json
 ```
 
 4. Read `answers` + `policy`.
@@ -77,7 +77,7 @@ Banks live in `references/banks/<name>.json`.
 
 After a `mode-router` decision that clears the floor, lock adaptive-persona and write:
 
-`/home/workdir/.grok/skills/adaptive-persona/state/current-mode.json`
+`${XDG_STATE_HOME:-$HOME/.local/state}/coden607/adaptive-persona/current-mode.json`
 
 ## Mode lock line (when routing persona)
 
