@@ -38,10 +38,11 @@ Do not call Jev to write emails, code, or explanations.
 
 1. Write `state` (facts only — user ask, files touched, last error, constraints). Keep it under ~2k tokens.
 2. Pick a question bank from `references/banks/` or write ≤20 questions.
-3. Run:
+3. Resolve `JEV_GATE_DIR` to the directory containing the loaded `jev-gate/SKILL.md`; never assume a `.grok`, `.claude`, `.codex`, or fixed home path.
+4. Run:
 
 ```bash
-python3 /home/workdir/.grok/skills/jev-gate/scripts/decide.py \
+python3 $JEV_GATE_DIR/scripts/decide.py \
   --bank mode-router \
   --state-file /tmp/jev-state.txt \
   --floor 0.72
@@ -53,8 +54,8 @@ Or pipe JSON:
 python3 "$JEV_GATE_DIR/scripts/decide.py" --file /tmp/jev-req.json
 ```
 
-4. Read `answers` + `policy`.
-5. Apply policy (below). Then Grok acts.
+5. Read `answers` + `policy`.
+6. Apply policy (below). Then Grok acts.
 
 ## Policy (always)
 
