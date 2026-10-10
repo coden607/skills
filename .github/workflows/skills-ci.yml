@@ -53,3 +53,28 @@ jobs:
           print(f"verified {len(src)} skills; bodies unchanged; descriptions {before}->{after}")
           PY
           test -f "$tmp/claude/jev-gate/scripts/decide.py"
+      - name: Runtime adapter smoke
+        run: |
+          tmp="$(mktemp -d)"
+          python3 -m py_compile scripts/build-runtime-bundles.py
+          python3 -I scripts/build-runtime-bundles.py --root "$PWD" --output-dir "$tmp/chatgpt"
+          test -s "$tmp/chatgpt/coden607-skills-bundle.md"
+          test -s "$tmp/chatgpt/bundle.md"
+          test -s "$tmp/chatgpt/PROJECT-INSTRUCTIONS.md"
+          python3 - "$PWD" "$tmp/chatgpt/manifest.json" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          root = Path(sys.argv[1])
+          manifest = json.loads(Path(sys.argv[2]).read_text())
+          expected = sorted(p.parent.name for p in root.glob("*/SKILL.md"))
+          actual = sorted(item["path"].split("/", 1)[0] for item in manifest["skills"])
+          assert actual == expected, (len(actual), len(expected))
+          assert manifest["skill_count"] == len(expected)
+          print(f"runtime bundle verified: {len(expected)} skills")
+          PY
+          HOME="$tmp/home" bash scripts/install-skills-everywhere.sh -A -a -s "$PWD"
+          test -f "$tmp/home/.grok/skills/legal-war-room/SKILL.md"
+          test -f "$tmp/home/.codex/skills/legal-war-room/SKILL.md"
+          grep -q '@xai-official/grok' scripts/one-shot-setup.sh
+          grep -q '@xai-official/grok' scripts/install-ai-clis.sh
