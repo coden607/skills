@@ -23,7 +23,7 @@ python3 /home/workdir/.grok/skills/jev-gate/scripts/decide.py \
   --bank mode-router --state-file /tmp/jev-state.txt --floor 0.72
 ```
 
-If `policy.action` is `act`, lock persona + overlay from `answers` and write `state/current-mode.json`.
+If `policy.action` is `act`, lock persona + overlay from `answers` and write `${XDG_STATE_HOME:-$HOME/.local/state}/coden607/adaptive-persona/current-mode.json` (create its parent directory first).
 If `ask_human`, ask one question. Live TypeSafe is used only when a key is in the environment; otherwise the local scorer keeps the same JSON contract.
 
 ## When this skill is active
