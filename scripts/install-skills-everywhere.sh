@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # install-skills-everywhere.sh — one-click install of SKILL.md-format skills
-# into any CLI agent that reads them (Claude Code, Codex CLI, OpenClaw, etc.).
+# into any CLI agent that reads them (Claude Code, Codex CLI, Grok Build, OpenClaw, etc.).
 #
 # Usage:
 #   ./install-skills-everywhere.sh                 # auto-detect known CLIs, copy mode
@@ -38,7 +38,7 @@ done
 
 # Auto-detect known CLI skill directories
 if [[ $AUTO -eq 1 || ${#TARGETS[@]} -eq 0 ]]; then
-  for d in "$HOME/.claude/skills" "$HOME/.codex/skills" "$HOME/.config/claude/skills"; do
+  for d in "$HOME/.claude/skills" "$HOME/.codex/skills" "$HOME/.grok/skills" "$HOME/.config/claude/skills"; do
     # include existing dirs AND the conventional ones (create them)
     TARGETS+=("$d")
   done
