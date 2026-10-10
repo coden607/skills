@@ -62,13 +62,33 @@ for rc in "$HOME/.bashrc" "$HOME/.profile"; do touch "$rc"; grep -q "$WRAPPER_DI
 ok "PATH hooked"
 
 # ---------- 4. skills ----------
-head "Cole Medin skills → every CLI"
+head "Skills → Claude compressed + Codex canonical"
 if have git; then
-  TMP="$(mktemp -d)" && git clone -q --depth 1 "$SKILLS_REPO" "$TMP/skills" && for d in "$TMP/skills"/*/; do
-    n="$(basename "$d")"; [[ -f "$d/SKILL.md" ]] || continue
-    for t in "$HOME/.claude/skills" "$HOME/.codex/skills"; do mkdir -p "$t"; rm -rf "$t/$t.tmp"; cp -R "$d" "$t/$n" 2>/dev/null; done
-  done && rm -rf "$TMP" && ok "skills synced to ~/.claude/skills + ~/.codex/skills"
-else bad "git missing — skills skipped (apt install git, re-run)"; fi
+  TMP="$(mktemp -d)"
+  if git clone -q --depth 1 "$SKILLS_REPO" "$TMP/skills"; then
+    if have python3 && python3 -I "$TMP/skills/scripts/compress-skills.py" "$TMP/skills" "$HOME/.claude/skills"; then
+      ok "all skills → ~/.claude/skills (compressed descriptions)"
+    else
+      bad "Claude compressed skill install FAILED"
+    fi
+    mkdir -p "$HOME/.codex/skills"
+    N=0
+    for d in "$TMP/skills"/*/; do
+      n="$(basename "$d")"; [[ -f "$d/SKILL.md" ]] || continue
+      rm -rf "$HOME/.codex/skills/$n.tmp"
+      cp -R "$d" "$HOME/.codex/skills/$n.tmp" &&
+        mv "$HOME/.codex/skills/$n.tmp" "$HOME/.codex/skills/$n" &&
+        N=$((N+1))
+    done
+    ok "$N skills → ~/.codex/skills (canonical descriptions)"
+    rm -rf "$TMP"
+  else
+    rm -rf "$TMP"
+    bad "skills clone failed"
+  fi
+else
+  bad "git missing — skills skipped (apt install git, re-run)"
+fi
 
 # ---------- 5. API keys ----------
 head "API keys"
