@@ -1,24 +1,34 @@
-HOW TO USE THIS BUNDLE IN CHATGPT
-=================================
+HOW TO USE CODEN607 SKILLS IN CHATGPT
+======================================
 
-Path A — Custom GPT (GPTs you create):
-1. Create/edit a GPT → "Configure" tab.
-2. Paste the section(s) you want into the GPT's "Instructions" field
-   (each skill starts at "## SKILL: <name>" — copy whole sections).
-3. OR upload cole-medin-skills-bundle.md under "Knowledge" and add to
-   Instructions: "Before answering, check the Knowledge bundle; if a
-   SKILL section's trigger matches, follow its procedure exactly."
+CANONICAL SOURCE
+https://github.com/coden607/skills
 
-Path B — ChatGPT Projects (Plus/Pro):
-1. New Project → upload cole-medin-skills-bundle.md as a Project file.
-2. First message: "Read the skills bundle in this project. Whenever my
-   request matches a skill's WHEN-TO-USE description, apply that skill's
-   procedure for your answer."
+LIVE MODE (preferred when GitHub access is available)
+1. Add bundle.md to the ChatGPT Project sources, or otherwise make it available
+   to the Project.
+2. Open Project settings and paste PROJECT-INSTRUCTIONS.md.
+3. The router tells ChatGPT to inspect the canonical GitHub SKILL.md files
+   lazily and load only the smallest relevant set.
 
-Path C — Codex CLI (OpenAI's coding agent, native skill support):
-   Just run:  ./install-skills-everywhere.sh
-   It already targets ~/.codex/skills — no bundle needed.
+OFFLINE / NO-GITHUB MODE
+1. On a machine with the repository, run:
+     python3 scripts/build-runtime-bundles.py --output-dir /tmp/coden607-chatgpt
+2. Upload /tmp/coden607-chatgpt/coden607-skills-bundle.md to the Project or GPT
+   Knowledge.
+3. Also add bundle.md and use PROJECT-INSTRUCTIONS.md as the Project/GPT
+   instructions.
 
-NOTE: ChatGPT cannot auto-load skills from disk; the bundle must be
-attached per-GPT / per-Project. This is a vendor limitation, not a gap
-in the skills.
+PERMANENT CLI WIRING
+Run:
+  bash scripts/install-all-ai-skills.sh
+
+That installs/synchronizes Claude, Codex and Grok native skill directories,
+writes persistent Gemini/Kimi instruction adapters, and builds a local ChatGPT
+bundle under ~/.coden607/chatgpt-bundle.
+
+IMPORTANT
+ChatGPT Projects can persist files and project instructions across chats in that
+Project, but a VPS filesystem cannot silently replace a ChatGPT Project source.
+When the canonical GitHub skills change and you rely on the offline bundle,
+regenerate and replace that Project/GPT knowledge file.
