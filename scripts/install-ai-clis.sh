@@ -67,8 +67,8 @@ fi
 
 if need_cmd grok; then ok "grok already installed ($(command -v grok))"
 else
-  echo "Trying npm grok-cli (community; xAI has no official CLI yet)..."
-  sudo npm install -g grok-cli >/dev/null 2>&1 && ok "grok installed" || bad "grok not available via npm — set XAI_API_KEY and use any OpenAI-compatible client"
+  echo "Installing official xAI Grok CLI..."
+  sudo npm install -g @xai-official/grok >/dev/null 2>&1 && ok "grok installed" || bad "grok install FAILED"
 fi
 
 # ---------- 3. Launchers (name + name-yolo) ----------
@@ -101,7 +101,7 @@ make_wrapper codex  "$REAL_codex"  "--dangerously-bypass-approvals-and-sandbox"
 make_wrapper gem    "$REAL_gemini" "--yolo"
 make_wrapper gemini "$REAL_gemini" "--yolo"
 make_wrapper kimi   "$REAL_kimi"   "--yolo"
-# grok: community chat CLI, no agent mode — wrapper runs normally (see generated file)
+make_wrapper grok   "$REAL_grok"   "--yolo"
 
 # PATH hook
 for rc in "$HOME/.bashrc" "$HOME/.profile"; do
