@@ -19,11 +19,21 @@ git clone https://github.com/coden607/skills.git
 ./skills/scripts/install-skills-everywhere.sh -s skills -t ~/.claude/skills   # or ~/.codex/skills, etc.
 ```
 
+## Claude Code cloud — compressed catalog
+
+Keep all 51 skills installed while shortening only the descriptions Claude scans before selecting a skill:
+
+```bash
+git clone --depth 1 https://github.com/coden607/skills /tmp/coden-skills && mkdir -p ~/.claude/skills && python3 -I /tmp/coden-skills/scripts/compress-skills.py /tmp/coden-skills ~/.claude/skills
+```
+
+`compress-skills.py` copies every top-level skill and all support files, keeps the full `SKILL.md` body unchanged, and rewrites only the top-level frontmatter `description`. The source checkout is never modified.
+
 ## iSH (iPhone) — one paste
 ```sh
 curl -fsSL https://raw.githubusercontent.com/coden607/skills/main/scripts/ocs-for-ish.sh | sh
 ```
-Installs git+bash via apk if needed, clones/updates this repo into `~/skills`, and installs the core 8 skills into `~/.claude/skills` + `~/.codex/skills` + `~/.config/claude/skills`. Re-paste anytime to update. `ALL=1` prefix installs all 44 skills, `LINK=1` symlinks instead of copying.
+Installs git+bash via apk if needed, clones/updates this repo into `~/skills`, and installs the core 8 skills into `~/.claude/skills` + `~/.codex/skills` + `~/.config/claude/skills`. Re-paste anytime to update. `ALL=1` prefix installs all 51 skills, `LINK=1` symlinks instead of copying.
 
 ## Also included
 - `scripts/install-ai-clis.sh` — one-click install of claude/codex/gem/kimi/grok CLIs with `yolo` launchers
@@ -32,7 +42,7 @@ Installs git+bash via apk if needed, clones/updates this repo into `~/skills`, a
 
 Skill format: SKILL.md frontmatter (name + description) + optional references/. Compatible with any agent that scans SKILL.md skills dirs.
 
-## Full installed set (2026-10-05)
+## Full installed set (2026-10-10)
 
 The repo root now also contains the Cole Medin skill set from [coleam00/skills](https://github.com/coleam00/skills) (MIT) plus `adaptive-persona` and `jev-gate`. Each `SKILL.md` has a Grok runtime block so the procedure runs without Claude Code slash commands.
 
